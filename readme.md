@@ -1,5 +1,10 @@
 
 ## 使用教程
+- 需要准备cookie
+  需要配置cookie。需要安装redis ，修改redis配置。一共2个爬虫，第二个爬虫需要第一个爬虫的帖子列表的key值。分析脚本需要2个key 。分别是2个爬虫的结果key
+  如果爬虫设备,需要修改setting.py中 DOWNLOAD_DELAY
+
+  爬虫可以多次执行,直到没有失败的url为止。没有失败的url的标识是redis中不存在quotes:urls 和 spider2:urls
 
 - 进入目录
   

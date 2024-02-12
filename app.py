@@ -44,7 +44,7 @@ def remove_duplicates(lst):
             unique_list.append(d)
     return unique_list
 threadInfos = get_dict_list_from_redis('localhost', 6379, 0, '3xozcZLFDNU0gNL4', 'quotes:20240209155240')
-replyInfos = get_dict_list_from_redis('localhost', 6379, 0, '3xozcZLFDNU0gNL4', 'spider2:20240212132005')
+replyInfos = get_dict_list_from_redis('localhost', 6379, 0, '3xozcZLFDNU0gNL4', 'spider2:20240209163653')
 unique_thread = remove_duplicates(threadInfos)
 unique_reply = remove_duplicates(replyInfos)
 
