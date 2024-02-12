@@ -100,6 +100,32 @@ response.xpath('//a[@title="下一页"]').xpath('./@href').get()
 
 期望的是分析出xx是 刷子，水军。
 
+# 部署
+```
+conda info --envs
+/Users/ft521/anaconda3/envs/ngaspider
+/Users/ft521/anaconda3/envs/ngaspider/lib/python3.10/site-packages/scrapyd/default_scrapyd.conf
+
+~/.scrapyd.conf
+
+ cp /Users/ft521/anaconda3/envs/ngaspider/lib/python3.10/site-packages/scrapyd/default_scrapyd.conf ~/.scrapyd.conf
+
+ 修改配置，增加账号和密码
+
+ cd tutorial                                            scrapyd-deploy -p tutorial                                 git:main*
+
+Packing version 1707725550
+Deploying to project "tutorial" in http://127.0.0.1:6800/addversion.json
+Server response (200):
+{"node_name": "ft521deMacBook-Pro.local", "status": "ok", "project": "tutorial", "version": "1707725550", "spiders": 2}
+
+curl -u admin:123456 http://127.0.0.1:6800/schedule.json -d project=tutorial -d spider=quotes
+```
+
+
+
+
+
 
 
 

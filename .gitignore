@@ -1,2 +1,8 @@
 tutorial/data
 data
+dbs
+eggs
+logs
+tutorial/build
+tutorial/project.egg-info
+twistd.pid
