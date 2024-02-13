@@ -3,6 +3,7 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import random
 from scrapy import signals
 
 # useful for handling different item types with a single interface
@@ -121,6 +122,15 @@ class ProxyMiddleware(HttpProxyMiddleware):
             "https": "http://%(user)s:%(pwd)s@%(proxy)s/" % {"user": username, "pwd": password, "proxy": tunnel}
         }
         request.meta["proxy"] = proxies['https']
+
+from .settings import USER_AGENTS
+
+class HeaderMiddleware(HttpProxyMiddleware):
+    def process_request(self,request,spider):
+        spider.logger.debug('HeaderMiddleware process_request')
+        request.headers['User-Agent'] = random.choice(USER_AGENTS)  # 修改headers
+
+
 from scrapy import Request
 from scrapy.downloadermiddlewares.redirect import RedirectMiddleware
 import time

@@ -29,29 +29,56 @@ class WordCounter(object):
         return counter.most_common(top_limit)
 
 
-# Drive Program
-if __name__ == '__main__':
+def split_list(lst, size):
+    """将列表拆分成多个大小为size的子列表"""
+    result = []
+    for i in range(0, len(lst), size):
+        result.append(lst[i:i+size])
+    return result
 
-    counter = WordCounter()
 
-    # 遍历文件夹为爬去下来的每个文件生成一份词频统计报告
-    g = os.walk(r'./data/uid')
+def get_files_info(directory):
+    files_info = []
+    for filename in os.listdir(directory):
+        file_path = os.path.join(directory, filename)
+        if os.path.isfile(file_path):
+            file_size = os.path.getsize(file_path)
+            files_info.append({'filename': filename, 'size': file_size})
+    return files_info
 
-    for path, dicrt, files in g:
-        for file_name in files:
-
-            uid = file_name.replace(".txt", "")
-
-            full_path = os.path.join(path, file_name)
-            file_size = os.path.getsize(full_path)
-            if file_size < 100:
-                continue
-            result = counter.count_from_file(full_path, top_limit=10)
-            # 将分析报告写入 .txt 文件中
-            output_file = f'data/analysis/{uid}.txt'
-            
+def gen_analysis_report(counter, files):
+    for file_info in files:
+        print(f"File: {file_info['filename']}, Size: {file_info['size']} bytes")
+        if file_info['size'] < 100:
+            continue
+        uid = file_info['filename'].replace(".txt", "")
+        full_path = f"./data/uid/{uid}.txt"
+        file_size = os.path.getsize(full_path)
+        if file_size < 100:
+            continue
+        result = counter.count_from_file(full_path, top_limit=10)
+        # 将分析报告写入 .txt 文件中
+        output_file = f'data/analysis/{uid}.txt'
+        for i, j in result:
             with open(output_file, "a") as f:
-                f.write(str(file_name) + '统计：'+'\n\n')
-            for i, j in result:
-                with open(output_file, "a") as f:
-                    f.write(str(i)+'\t'+str(j)+'\n')
+                f.write(str(i)+'\t'+str(j)+'\n')
+counter = WordCounter()
+directory = 'data/uid'
+files_info = get_files_info(directory)
+
+n = 200  # 线程数
+datas = split_list(files_info, n)
+import threading
+# 创建并启动线程
+threads = []
+for item in datas:
+    thread = threading.Thread(target=gen_analysis_report, args=(counter,item,))
+    thread.start()
+    threads.append(thread)
+
+# 等待所有线程结束
+for thread in threads:
+    thread.join()
+
+print("All threads have finished execution.")
+        

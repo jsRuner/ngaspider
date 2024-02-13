@@ -6,3 +6,5 @@ logs
 tutorial/build
 tutorial/project.egg-info
 twistd.pid
+items
+tutorial.egg

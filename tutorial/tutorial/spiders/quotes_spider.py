@@ -10,16 +10,25 @@ import time
 class QuotesSpider(scrapy.Spider):
     name = "quotes"
 
-    custom_delay = 1  # 初始延迟时间（单位：秒）
 
     cookies={}
-    def __init__(self, fid=None, param2=None, *args, **kwargs):
+    def __init__(self, fid=None, pages=None,mode=None, *args, **kwargs):
         super(QuotesSpider, self).__init__(*args, **kwargs)
+        self.logger.debug('fid: %s, pages: %s,mode:%s' % (fid, pages,mode))
         if fid is None:
             fid = 510428
+        if pages is None:
+            pages = 335
+            #0 从新开始 1 处理上次失败的url
+        if mode is None:
+            mode = '0'
+
+        
         
         self.fid = fid
-        self.param2 = param2
+        self.pages = pages
+        self.mode = mode
+
 
     def start_requests(self):
         settings = get_project_settings()
@@ -31,17 +40,17 @@ class QuotesSpider(scrapy.Spider):
         self.cookies= settings.get('NGA_COOKIE')
 
         urls = []
-        self.logger.debug("fid:{}".format(self.fid))
-        for i in range(1, 2):
-            urls.append("https://bbs.nga.cn/thread.php?fid={}&order_by=postdatedesc&page={}".format(self.fid,i))
-        # 处理上次失败的url
-        threadInfos = get_urls_from_redis(redis_host, redis_port, redis_db,redis_password, self.name+":urls")
-        for threadItem in threadInfos:
-            self.logger.debug("threadItem:{}".format(threadItem))
-            urls.append(threadItem)
-        delete_key_from_redis(redis_host, redis_port, redis_db,redis_password, self.name+":urls")
+        if self.mode == '0':
+            for i in range(1, self.pages):
+                urls.append("https://bbs.nga.cn/thread.php?fid={}&order_by=postdatedesc&page={}".format(self.fid,i))
+        if self.mode == '1':
+            threadInfos = get_urls_from_redis(redis_host, redis_port, redis_db,redis_password, self.name+":urls")
+            for threadItem in threadInfos:
+                self.logger.debug("threadItem:{}".format(threadItem))
+                urls.append(threadItem)
+            delete_key_from_redis(redis_host, redis_port, redis_db,redis_password, self.name+":urls")
 
-
+        self.logger.debug("urls:{}".format(urls))
 
         for url in urls:
             yield scrapy.Request(url=url,cookies=self.cookies,
@@ -62,7 +71,7 @@ class QuotesSpider(scrapy.Spider):
                 "content":response.text
             }
         
-        next_page = response.xpath('//a[@title="下一页"]').xpath('./@href').get()
-        if next_page:
-            yield scrapy.Request(response.urljoin(next_page),cookies=self.cookies, callback=self.parse)
+        # next_page = response.xpath('//a[@title="下一页"]').xpath('./@href').get()
+        # if next_page:
+        #     yield scrapy.Request(response.urljoin(next_page),cookies=self.cookies, callback=self.parse)
 

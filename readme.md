@@ -121,6 +121,12 @@ Server response (200):
 
 curl -u admin:123456 http://127.0.0.1:6800/schedule.json -d project=tutorial -d spider=quotes
 ```
+打包发布文件
+scrapyd-deploy --build-egg tutorial.egg
+
+可视化
+scrapydweb
+
 
 
 
