@@ -90,9 +90,9 @@ class MyRedisPipeline(object):
 
         
 
-        # 获取当前时间
+        
         current_time = datetime.now()
-        time_string = current_time.strftime("%Y%m%d%H%M%S")
+        time_string = current_time.strftime("%Y%m%d%")
 
         redis_key = "{}:{}".format(crawler.spider.name,time_string)
 

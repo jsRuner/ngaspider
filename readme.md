@@ -127,6 +127,12 @@ scrapyd-deploy --build-egg tutorial.egg
 可视化
 scrapydweb
 
+不推荐docker-compose部署。理论上应该是先启动多个scrapyd 再启动scrapydweb 
+compose部署带来ip访问的问题。需要增加代理来访问。
+
+docker run 参考
+https://github.com/libaibuaidufu/scrapyd_web_log
+
 
 
 
