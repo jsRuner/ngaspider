@@ -11,6 +11,8 @@ services:
     ports:
       - 5000:5000
     command: scrapydweb
+    volumes:
+      - ./data/scrapydweb_settings_v10.py:/app/scrapydweb_settings_v10.py
     depends_on:
       - scrapyd
 
