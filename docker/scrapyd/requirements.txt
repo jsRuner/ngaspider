@@ -1,0 +1,13 @@
+jieba
+matplotlib
+matplotlib-inline
+pytz
+redis
+requests
+requests-file
+Scrapy
+scrapy-redis
+urllib3
+wordcloud
+logparser
+scrapyd

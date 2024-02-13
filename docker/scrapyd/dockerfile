@@ -1,0 +1,39 @@
+FROM python:3.10.9
+
+
+WORKDIR /app
+
+
+
+RUN mkdir /app/eggs
+RUN mkdir /app/logs
+RUN mkdir /app/items
+RUN mkdir /app/dbs
+RUN mkdir /root/logs
+
+
+
+
+# 安装 Scrapyd
+# RUN pip install scrapyd
+# RUN pip install logparser
+
+
+COPY requirements.txt .
+
+RUN pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+
+
+# 创建 Scrapyd 配置目录
+RUN mkdir /etc/scrapyd
+
+# 复制 Scrapyd 配置文件
+COPY scrapyd.conf /etc/scrapyd/scrapyd.conf
+
+# 暴露 Scrapyd 服务端口
+EXPOSE 6800
+
+# 在容器启动时运行 Scrapyd
+CMD scrapyd & logparser

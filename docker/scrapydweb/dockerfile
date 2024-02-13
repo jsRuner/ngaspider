@@ -1,0 +1,24 @@
+FROM python:3.10.9
+
+
+WORKDIR /app
+
+# RUN mkdir /app/eggs
+# RUN mkdir /app/logs
+# RUN mkdir /app/items
+# RUN mkdir /app /dbs
+
+
+
+# 安装 Scrapyd
+RUN pip install scrapydweb
+
+
+# 复制  配置文件
+COPY scrapydweb_settings_v10.py /app/scrapydweb_settings_v10.py
+
+# 暴露  服务端口
+EXPOSE 5000
+
+# 在容器启动时运行 
+CMD ["scrapydweb"]

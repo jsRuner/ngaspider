@@ -1,0 +1,17 @@
+version: '3'
+services:
+  scrapyd:
+    build:
+      context: ./scrapyd
+    ports:
+      - 6800:6800
+  scrapydweb:
+    build:
+      context: ./scrapydweb
+    ports:
+      - 5000:5000
+    command: scrapydweb
+    depends_on:
+      - scrapyd
+
+  
