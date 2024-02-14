@@ -160,13 +160,11 @@ USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 UBrowser/4.0.3214.0 Safari/537.36",
 ]
 
-REDIS_HOST = 'localhost'
+REDIS_HOST = '192.168.50.52'
 REDIS_PORT = 6379
 REDIS_DB = 0
 REDIS_PASSWORD = '3xozcZLFDNU0gNL4'
 
-REDIS_URL = 'redis://:3xozcZLFDNU0gNL4@localhost:6379/0'
-REDIS_ITEMS_SERIALIZER = 'tutorial.utils.serialize_json'
 
 # 启用日志记录
 LOG_ENABLED = True

@@ -1,6 +1,6 @@
 import scrapy
 from scrapy.utils.project import get_project_settings
-from ..utils  import get_dict_list_from_redis
+from ..utils  import get_dict_list_from_redis,getCurrentDateString
 
 from ..utils  import get_urls_from_redis,delete_key_from_redis
 
@@ -11,8 +11,7 @@ class Spider2Spider(scrapy.Spider):
     def __init__(self, list_redis_key=None, param2=None, *args, **kwargs):
             super(Spider2Spider, self).__init__(*args, **kwargs)
             if list_redis_key is None:
-                self.logger.info("list_redis_key is None")
-                exit(0)
+                list_redis_key="quotes:"+getCurrentDateString()
             self.list_redis_key = list_redis_key
             self.param2 = param2
             self.logger.debug("list_redis_key ={}".format(self.list_redis_key))

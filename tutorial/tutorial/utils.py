@@ -1,6 +1,8 @@
 import json
 import re
 import redis
+from datetime import datetime
+
 def serialize_json(value):
     return json.dumps(value, ensure_ascii=False).encode('utf-8')
 
@@ -65,3 +67,9 @@ def delete_key_from_redis(redis_host, redis_port, redis_db, redis_password,key):
     r = redis.Redis(host=redis_host, port=redis_port, db=redis_db, password=redis_password)
     # 删除给定键
     r.delete(key)
+
+# 获取20240214 格式的字符串
+def getCurrentDateString():
+    current_time = datetime.now()
+    time_string = current_time.strftime("%Y%m%d%")
+    return time_string

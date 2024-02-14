@@ -1,24 +1,21 @@
 
 ## 使用教程
 - 需要准备cookie
-  需要配置cookie。需要安装redis ，修改redis配置。一共2个爬虫，第二个爬虫需要第一个爬虫的帖子列表的key值。分析脚本需要2个key 。分别是2个爬虫的结果key
-  如果爬虫设备,需要修改setting.py中 DOWNLOAD_DELAY
-
-  爬虫可以多次执行,直到没有失败的url为止。没有失败的url的标识是redis中不存在quotes:urls 和 spider2:urls
+  需要配置cookie,修改redis参数
 
 - 进入目录
   
   cd tutorial/tutorial
 
-- 爬取板块帖子列表   624 怀旧  510428 探索
+- 爬取板块帖子列表   624 怀旧板块id  510428 探索板块id
 
 scrapy crawl quotes -a fid=510428
 
 - 爬取板块帖子评论
 
-scrapy crawl spider2 -a list_redis_key=quotes:20240212095815
+scrapy crawl spider2 -a list_redis_key=quotes:20240212
 
-list_redis_key是帖子列表的redis的key值
+list_redis_key是帖子列表的redis的key值。默认的key是 quotes:当日
 
 - 分析数据
 
@@ -138,6 +135,8 @@ docker run -d -p 6800:6800 -v /Users/ft521/Documents/study/workspace/py-project/
 docker build -t scrapydweb:v1 .
 docker run -d -p 5000:5000 -v /Users/ft521/Documents/study/workspace/py-project/nga-spider/docker/data/scrapydweb_settings_v10.py:/app/scrapydweb_settings_v10.py --name scrapydweb scrapydweb:v1
 docker restart scrapydweb
+
+
 
 
 
