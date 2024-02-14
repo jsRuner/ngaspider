@@ -131,16 +131,21 @@ docker run 参考
 https://github.com/libaibuaidufu/scrapyd_web_log
 
 docker build -t scrapyd_logparser:v1 .
-docker run -d -p 6800:6800 -v /Users/ft521/Documents/study/workspace/py-project/nga-spider/docker/data:/app --name scrapyd_1 scrapyd_logparser:v1
+docker run -d -p 6800:6800 --name scrapyd_1 scrapyd_logparser:v1
 docker build -t scrapydweb:v1 .
-docker run -d -p 5000:5000 -v /Users/ft521/Documents/study/workspace/py-project/nga-spider/docker/data/scrapydweb_settings_v10.py:/app/scrapydweb_settings_v10.py --name scrapydweb scrapydweb:v1
+docker run -d -p 5000:5000  --name scrapydweb scrapydweb:v1
 docker restart scrapydweb
 
 #镜像下载
 已经上传到docker hub
 
-docker pull doudouchidou/scrapydweb:v1
+ docker tag scrapydweb:v1  doudouchidou/scrapydweb:v1
+ docker push doudouchidou/scrapydweb:v1
+ docker tag scrapyd_logparser:v1  doudouchidou/scrapyd_logparser:v1
+docker push doudouchidou/scrapyd_logparser:v1
 
+
+docker pull doudouchidou/scrapydweb:v1
 docker pull doudouchidou/scrapyd_logparser:v1
 
 
