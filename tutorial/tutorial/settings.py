@@ -54,7 +54,7 @@ DOWNLOADER_MIDDLEWARES = {
     "tutorial.middlewares.MyRedirectMiddleware": 543,
     'scrapy.downloadermiddlewares.redirect.RedirectMiddleware': None,
 
-    # "tutorial.middlewares.ProxyMiddleware": 1,
+    "tutorial.middlewares.ProxyMiddleware": 1,
 
 }
 DOWNLOAD_DELAY = 1
@@ -105,16 +105,13 @@ FEED_EXPORT_ENCODING = "utf-8"
 DUPEFILTER_DEBUG = True
 
 QUOTES_PIPELINES = {
-    # 'scrapy_redis.pipelines.RedisPipeline': 300,
     'tutorial.pipelines.MyRedisPipeline': 300,
     'tutorial.pipelines.DelThreadPipeline': 1,
-    # 'tutorial.pipelines.MyPipeline': 2,
 }
 
 
 SPIDER2_PIPELINES = {
     'tutorial.pipelines.MyRedisPipeline': 300,
-    # 'tutorial.pipelines.MyPipeline': 1,
     'tutorial.pipelines.OnlyKeepCnPipeline': 298,
 }
 
@@ -186,7 +183,10 @@ NGA_COOKIE = {
     'ngaPassportUid': '3172015',
     'ngaPassportCid': 'xxxxxxxxxxxxxxxxx',
 }
-
+# 是否使用代理
+use_proxy = False 
+if not use_proxy:
+     DOWNLOADER_MIDDLEWARES['tutorial.middlewares.ProxyMiddleware'] = None
 
 import sys
 SPIDER1_NAME = 'quotes'

@@ -37,22 +37,7 @@ class OnlyKeepCnPipeline:
 
         return item
 
-class MyPipeline:
-    def process_item(self, item, spider):
-        output_directory = spider.settings.get('OUTPUT_DIRECTORY')
-        url = item['url']
-        content = item['content']
-        os.makedirs(output_directory, exist_ok=True)
-        filename = self.get_filename_from_url(url)
-        file_path = os.path.join(output_directory, filename)
-        if not os.path.exists(file_path):
-            with open(file_path, 'w', encoding='utf-8') as f:
-                f.write(content)
-        
-        del item['url']
-        del item['content']
 
-        return item
 
     def get_filename_from_url(self, url):
         import re

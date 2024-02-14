@@ -106,22 +106,34 @@ class TutorialDownloaderMiddleware:
 import base64
 import requests
 from scrapy.downloadermiddlewares.httpproxy import HttpProxyMiddleware
-
+from .utils import get_random_dict_from_url
 class ProxyMiddleware(HttpProxyMiddleware):
     def process_request(self,request,spider):
         spider.logger.debug('ProxyMiddleware process_request')
+        # tunnel = "z277.kdltps.com:15818"
+        # username = "xxxxxx"
+        # password = "xxxxxx"
+        # proxies = {
+        #     "http": "http://%(user)s:%(pwd)s@%(proxy)s/" % {"user": username, "pwd": password, "proxy": tunnel},
+        #     "https": "http://%(user)s:%(pwd)s@%(proxy)s/" % {"user": username, "pwd": password, "proxy": tunnel}
+        # }
 
-        # 隧道域名:端口号
-        tunnel = "z277.kdltps.com:15818"
+        # http://127.0.0.1:8080/get?type=HTTP&count=10&anonymity=all
 
-        # 用户名密码方式
-        username = "xxxxxx"
-        password = "xxxxxx"
-        proxies = {
-            "http": "http://%(user)s:%(pwd)s@%(proxy)s/" % {"user": username, "pwd": password, "proxy": tunnel},
-            "https": "http://%(user)s:%(pwd)s@%(proxy)s/" % {"user": username, "pwd": password, "proxy": tunnel}
-        }
-        request.meta["proxy"] = proxies['https']
+        proxyDict=get_random_dict_from_url()
+
+        if proxyDict:
+            spider.logger.debug('proxyDict {}'.format(proxyDict))
+            proxy = proxyDict['Ip']
+            port = proxyDict['Port']
+            tunnel = proxy + ":" + port
+            proxies = {
+                "http": "http://%(proxy)s/" % { "proxy": tunnel},
+                "https": "http://%(proxy)s/" % { "proxy": tunnel}
+            }
+            request.meta["proxy"] = proxies['http']
+            request.meta["download_timeout"] = 5
+
 
 from .settings import USER_AGENTS
 

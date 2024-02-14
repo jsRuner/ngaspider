@@ -73,3 +73,22 @@ def getCurrentDateString():
     current_time = datetime.now()
     time_string = current_time.strftime("%Y%m%d%")
     return time_string
+
+import requests
+import json
+import random
+
+def get_random_dict_from_url():
+    url="http://127.0.0.1:8080/get?type=HTTP&count=10&anonymity=all&country=中国"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = json.loads(response.text)
+        
+        if isinstance(data, list):
+            random_dict = random.choice(data)
+            return random_dict
+        else:
+            return None
+    else:
+        return None
