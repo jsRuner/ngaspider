@@ -68,7 +68,6 @@ class QuotesSpider(scrapy.Spider):
                 "replyer_name": quote.css(".replyer::text").get(),
                 "replies": quote.css(".replies::text").get(),
                 "url":response.url,
-                "content":response.text
             }
         
         # next_page = response.xpath('//a[@title="下一页"]').xpath('./@href').get()

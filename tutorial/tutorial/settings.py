@@ -108,13 +108,13 @@ QUOTES_PIPELINES = {
     # 'scrapy_redis.pipelines.RedisPipeline': 300,
     'tutorial.pipelines.MyRedisPipeline': 300,
     'tutorial.pipelines.DelThreadPipeline': 1,
-    'tutorial.pipelines.MyPipeline': 2,
+    # 'tutorial.pipelines.MyPipeline': 2,
 }
 
 
 SPIDER2_PIPELINES = {
     'tutorial.pipelines.MyRedisPipeline': 300,
-    'tutorial.pipelines.MyPipeline': 1,
+    # 'tutorial.pipelines.MyPipeline': 1,
     'tutorial.pipelines.OnlyKeepCnPipeline': 298,
 }
 

@@ -64,7 +64,6 @@ class Spider2Spider(scrapy.Spider):
                 "author_id": quote.css("a.author::attr('href')").get().replace("nuke.php?func=ucp&uid=",""),
                 "post_date": quote.xpath('//span[@title="reply time"]/text()').get(),
                 "url":response.url,
-                "content":response.text
             }
         next_page = response.xpath('//a[@title="下一页"]').xpath('./@href').get()
         if next_page:
