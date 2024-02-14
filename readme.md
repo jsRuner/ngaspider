@@ -125,7 +125,7 @@ scrapyd-deploy --build-egg tutorial.egg
 scrapydweb
 
 不推荐docker-compose部署。理论上应该是先启动多个scrapyd 再启动scrapydweb 
-compose部署带来ip访问的问题。需要增加代理来访问。
+compose部署带来访问的问题
 
 docker run 参考
 https://github.com/libaibuaidufu/scrapyd_web_log
@@ -135,6 +135,14 @@ docker run -d -p 6800:6800 -v /Users/ft521/Documents/study/workspace/py-project/
 docker build -t scrapydweb:v1 .
 docker run -d -p 5000:5000 -v /Users/ft521/Documents/study/workspace/py-project/nga-spider/docker/data/scrapydweb_settings_v10.py:/app/scrapydweb_settings_v10.py --name scrapydweb scrapydweb:v1
 docker restart scrapydweb
+
+#镜像下载
+已经上传到docker hub
+
+docker pull doudouchidou/scrapydweb:v1
+
+docker pull doudouchidou/scrapyd_logparser:v1
+
 
 
 
