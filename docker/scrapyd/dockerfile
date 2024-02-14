@@ -6,9 +6,9 @@ WORKDIR /app
 
 
 RUN mkdir /app/eggs
-RUN mkdir /app/logs
 RUN mkdir /app/items
 RUN mkdir /app/dbs
+
 RUN mkdir /root/logs
 
 
