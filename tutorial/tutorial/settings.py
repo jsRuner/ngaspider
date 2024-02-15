@@ -156,6 +156,7 @@ USER_AGENTS = [
     # UC浏览器
     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 UBrowser/4.0.3214.0 Safari/537.36",
 ]
+AUTOTHROTTLE_ENABLED = True  # 启用自动限速
 
 REDIS_HOST = '192.168.50.52'
 REDIS_PORT = 6379
@@ -165,17 +166,15 @@ REDIS_PASSWORD = '3xozcZLFDNU0gNL4'
 
 # 启用日志记录
 LOG_ENABLED = True
-
 # 设置日志级别
 LOG_LEVEL = 'DEBUG'
-
 # 设置日志输出格式
 LOG_FORMAT = '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
 
 
 
 # 0 无限制  其他值表示只爬取最大条数
-MAX_ITEM_NUM = 1000
+MAX_ITEM_NUM = 10
 
 
 #nga站点cookie
@@ -188,6 +187,11 @@ use_proxy = False
 if not use_proxy:
      DOWNLOADER_MIDDLEWARES['tutorial.middlewares.ProxyMiddleware'] = None
 
+
+
+
+
+
 import sys
 SPIDER1_NAME = 'quotes'
 SPIDER2_NAME = 'spider2'
@@ -198,6 +202,3 @@ elif SPIDER2_NAME in sys.argv:
     ITEM_PIPELINES = SPIDER2_PIPELINES
 else:
     ITEM_PIPELINES = {}
-
-# 没生效
-# STATS_CLASS = 'tutorial.stats.CustomStatsCollector'

@@ -51,8 +51,11 @@ class QuotesSpider(scrapy.Spider):
             delete_key_from_redis(redis_host, redis_port, redis_db,redis_password, self.name+":urls")
 
         self.logger.debug("urls:{}".format(urls))
-
-        for url in urls:
+        max_item_num = settings.get('MAX_ITEM_NUM',0)
+        for i in range(len(urls)):
+            if max_item_num>0 and i>=max_item_num:
+                break
+            url = urls[i]
             yield scrapy.Request(url=url,cookies=self.cookies,
  callback=self.parse)
 
@@ -70,7 +73,4 @@ class QuotesSpider(scrapy.Spider):
                 "url":response.url,
             }
         
-        # next_page = response.xpath('//a[@title="下一页"]').xpath('./@href').get()
-        # if next_page:
-        #     yield scrapy.Request(response.urljoin(next_page),cookies=self.cookies, callback=self.parse)
-
+       
